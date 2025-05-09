@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель управления</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        .dashboard-container {
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            margin-top: 50px;
+        }
+        h1 {
+            color: #ffffff;
+        }
+        .btn-primary, .btn-success, .btn-warning, .btn-info, .btn-danger {
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .btn-success {
+            background-color: #28a745;
+        }
+        .btn-success:hover {
+            background-color: #1e7e34;
+        }
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+        .btn-info {
+            background-color: #17a2b8;
+        }
+        .btn-info:hover {
+            background-color: #117a8b;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+        }
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        .table {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .table th {
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+        }
+        .table td {
+            border-color: #444;
+        }
+        .badge-success {
+            background-color: #28a745;
+        }
+        .badge-danger {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/navbar-after-register :: navbar}"></div>
+
+<div class="container">
+    <h1 class="text-center my-4">Панель управления</h1>
+    <div class="dashboard-container">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Имя пользователя</th>
+                    <th>Роль</th>
+                    <th>Статус</th>
+                    <th>Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.username}"></td>
+                    <td th:text="${user.role}"></td>
+                    <td>
+                        <span th:if="${user.enabled}" class="badge badge-success">Активен</span>
+                        <span th:unless="${user.enabled}" class="badge badge-danger">Заблокирован</span>
+                    </td>
+                    <td>
+                        <a th:href="@{/admin/edit-user/{id}(id=${user.id})}" class="btn btn-sm btn-primary">Редактировать</a>
+                        <a th:href="@{/admin/toggle-user/{id}(id=${user.id})}" class="btn btn-sm btn-warning">
+                            <span th:if="${user.enabled}">Заблокировать</span>
+                            <span th:unless="${user.enabled}">Разблокировать</span>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="text-center mt-3">
+        <a href="/admin/add-user" class="btn btn-success">Добавить пользователя</a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

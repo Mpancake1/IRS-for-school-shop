@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Товары</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+<div th:replace="~{fragments/navbar-after-register :: navbar}"></div>
+<h1 class="mb-4">Список товаров</h1>
+
+<!-- Форма поиска и сортировки -->
+<form th:action="@{/products}" method="get" class="row g-3 mb-4">
+  <div class="col-md-4">
+    <input type="text" name="keyword" class="form-control" placeholder="Поиск по названию...">
+  </div>
+  <div class="col-md-4">
+    <select name="sort" class="form-select">
+      <option value="">Без сортировки</option>
+      <option value="priceAsc">Цена по возрастанию</option>
+      <option value="priceDesc">Цена по убыванию</option>
+      <option value="nameAsc">Имя от А до Я</option>
+      <option value="nameDesc">Имя от Я до А</option>
+    </select>
+  </div>
+  <div class="col-md-4">
+    <button type="submit" class="btn btn-primary w-100">Поиск/Сортировка</button>
+  </div>
+</form>
+
+<!-- Таблица товаров -->
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Название</th>
+    <th>Артикул</th>
+    <th>Цена</th>
+    <th>Описание</th>
+    <th>Количество</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="product : ${products}">
+    <td th:text="${product.name}">Название</td>
+    <td th:text="${product.article}">Артикул</td>
+    <td th:text="${product.price}">Цена</td>
+    <td th:text="${product.description}">Описание</td>
+    <td th:text="${product.quantity}">Количество</td>
+  </tr>
+  </tbody>
+</table>
+
+</body>
+</html>
