@@ -79,6 +79,9 @@
         <a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
            href="/admin/panel"
            class="btn btn-warning">Панель управления</a>
+        <a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+           href="/orders/new"
+           class="btn btn-success">Создать заказ</a>
     </div>
 </div>
 
